@@ -40,8 +40,6 @@ module Halogen.HTML.Properties
   , tabIndex
 
   , ref
-
-  , LengthLiteral(..)
   ) where
 
 import Prelude
@@ -53,13 +51,6 @@ import DOM.HTML.Types (HTMLElement)
 
 import Halogen.HTML.Core (Prop(..), ClassName, prop, propName, attrName, runClassName)
 
-data LengthLiteral
-  = Pixels Int
-  | Percent Number
-
-printLengthLiteral :: LengthLiteral -> String
-printLengthLiteral (Pixels n) = show n
-printLengthLiteral (Percent n) = show n <> "%"
 
 -- | The `key` property associates a unique key with a node, which can be used
 -- | to implement a more efficient diff/patch.
@@ -93,8 +84,8 @@ rowSpan = prop (propName "rowSpan") (Just $ attrName "rowspan")
 for :: forall i. String -> Prop i
 for = prop (propName "htmlFor") (Just $ attrName "for")
 
-height :: forall i. LengthLiteral -> Prop i
-height = prop (propName "height") (Just $ attrName "height") <<< printLengthLiteral
+height :: forall i. Int -> Prop i
+height = prop (propName "height") (Just $ attrName "height") <<< show
 
 href :: forall i. String -> Prop i
 href = prop (propName "href") (Just $ attrName "href")
@@ -124,8 +115,8 @@ type_ = prop (propName "type") (Just $ attrName "type")
 value :: forall i. String -> Prop i
 value = prop (propName "value") (Just $ attrName "value")
 
-width :: forall i. LengthLiteral -> Prop i
-width = prop (propName "width") (Just $ attrName "width") <<< printLengthLiteral
+width :: forall i. Int -> Prop i
+width = prop (propName "width") (Just $ attrName "width") <<< show
 
 disabled :: forall i. Boolean -> Prop i
 disabled = prop (propName "disabled") (Just $ attrName "disabled")
